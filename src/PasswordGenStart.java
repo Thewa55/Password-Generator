@@ -6,13 +6,16 @@ public class PasswordGenStart {
     private boolean numbers;
     private boolean symbols;
     private int passwordLength = 0;
+    private String upperPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private String lowerPool = "abcdefghijklmnopqrstuvwxyz";
+    private String numberPool = "0123456789";
+    private String symbolPool = "!@#$%^&*()./";
+    private String passwordPool = "";
 
     public PasswordGenStart(){
         passwordLength();
         System.out.println("The length specified is "+passwordLength);
         passwordIdentifier();
-//        System.out.println("Upper case "+ upperCase);
-//        System.out.println("Lower case "+ lowerCase);
     }
 
     private void passwordLength(){
@@ -30,13 +33,18 @@ public class PasswordGenStart {
 
     private void passwordIdentifier(){
         upperCase = passwordSpecifications("uppercase letter");
-        lowerCase = passwordSpecifications("lowercasse letter");
+        lowerCase = passwordSpecifications("lowercase letter");
         numbers = passwordSpecifications("numbers");
         symbols = passwordSpecifications("symbols");
         System.out.println("Uppercase: "+ upperCase);
         System.out.println("Lowercase: "+ lowerCase);
         System.out.println("Numbers: "+ numbers);
         System.out.println("Symbols: "+ symbols);
+        if(upperCase){ passwordPool = passwordPool + upperPool; }
+        if(lowerCase){ passwordPool = passwordPool + lowerPool; }
+        if(numbers){ passwordPool = passwordPool + numberPool;}
+        if(symbols){ passwordPool = passwordPool + symbolPool;}
+        System.out.println(passwordPool);
     }
 
     private boolean passwordSpecifications(String spec){
@@ -46,7 +54,7 @@ public class PasswordGenStart {
         System.out.println("Does your password need "+ spec+"? (yes/no)");
         choice = in.next();
         if(choice.equals("yes")){
-            needed = true;
+            return needed;
         } else if (choice.equals("no")){
             needed = false;
         } else {
