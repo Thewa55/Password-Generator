@@ -11,11 +11,18 @@ public class PasswordGenStart {
     private String numberPool = "0123456789";
     private String symbolPool = "!@#$%^&*()./";
     private String passwordPool = "";
+    private String password;
 
     public PasswordGenStart(){
         passwordLength();
         System.out.println("The length specified is "+passwordLength);
         passwordIdentifier();
+        if(passwordPool.length() == 0){
+            System.out.println("You need to select at least one password criteria.");
+            passwordIdentifier();
+        }
+        this.password = generatePassword();
+        System.out.println("Your password is :" + password);
     }
 
     private void passwordLength(){
@@ -36,15 +43,10 @@ public class PasswordGenStart {
         lowerCase = passwordSpecifications("lowercase letter");
         numbers = passwordSpecifications("numbers");
         symbols = passwordSpecifications("symbols");
-        System.out.println("Uppercase: "+ upperCase);
-        System.out.println("Lowercase: "+ lowerCase);
-        System.out.println("Numbers: "+ numbers);
-        System.out.println("Symbols: "+ symbols);
         if(upperCase){ passwordPool = passwordPool + upperPool; }
         if(lowerCase){ passwordPool = passwordPool + lowerPool; }
         if(numbers){ passwordPool = passwordPool + numberPool;}
         if(symbols){ passwordPool = passwordPool + symbolPool;}
-        System.out.println(passwordPool);
     }
 
     private boolean passwordSpecifications(String spec){
@@ -62,5 +64,14 @@ public class PasswordGenStart {
             in.next();
         }
         return needed;
+    }
+
+    private String generatePassword(){
+        char [] password = new char[passwordLength];
+        for(int i = 0; i < passwordLength; i++){
+            int rand = (int) (Math.random() * passwordPool.length());
+            password[i] = passwordPool.charAt(rand);
+        }
+        return new String(password);
     }
 }
